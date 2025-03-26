@@ -87,10 +87,10 @@
 
 .glass-card p, .radio-group label {
     color: rgb(255, 255, 255);
-    font-weight: 600; /* semi-bold */
+    font-weight: bold;
     text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 0.7),
-        -1px -1px 3px rgba(0, 0, 0, 0.5);
+        1px 1px 3px rgba(0, 0, 0, 0.9),
+        -1px -1px 3px rgba(0, 0, 0, 0.8);
     
 }
 
@@ -109,7 +109,11 @@
     font-weight: normal;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: white;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    text-shadow: 
+        1px 1px 3px rgba(0, 0, 0, 0.9),
+        -1px -1px 3px rgba(0, 0, 0, 0.8);
     
 }
 

@@ -13,7 +13,7 @@ const Inicio = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedOption === 'patrocinador') {
-      navigate('/patrocinador'); // Rota para patrocinador
+      navigate('/Forms2'); // Rota para patrocinador
     } else if (selectedOption === 'palestrante') {
       navigate('/Forms'); // Rota para o formulário de palestrante/convidado
     }

@@ -13,35 +13,26 @@ const Inicio = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedOption === 'patrocinador') {
-      navigate('/Forms2'); // Rota para patrocinador
+      navigate('/Forms2');
     } else if (selectedOption === 'palestrante') {
-      navigate('/Forms'); // Rota para o formulário de palestrante/convidado
+      navigate('/Forms');
     }
   };
 
   return (
-    <div 
-      className="inicio-container"
-      style={{
-        backgroundImage: "url('/images/banner2.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-      }}
-    >
-      <div className="glass-card">
-        {/* Adicione esta linha para a marca d'água */}
-      <img 
-        src="/images/novidade23.png" 
-        alt="Marca d'água" 
-        className="marca-dagua2"
-      />
+    <div className="inicio-container">
+      <div className="card-elegante">
+        <img 
+          src="/images/novidade23.png" 
+          alt="Marca d'água" 
+          className="marca-dagua"
+        />
         <h1>Bem-vindo ao Formulário Expo Rio Carnaval Summit</h1>
         <p>Por favor, selecione sua categoria:</p>
         
         <form onSubmit={handleSubmit}>
-          <div className="radio-group1">
-            <label className="radio-label1">
+          <div className="radio-group">
+            <label className="radio-label">
               <input
                 type="radio"
                 name="userType"
@@ -53,7 +44,7 @@ const Inicio = () => {
               Sou Patrocinador
             </label>
             
-            <label className="radio-label1">
+            <label className="radio-label">
               <input
                 type="radio"
                 name="userType"

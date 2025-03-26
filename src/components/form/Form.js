@@ -9,9 +9,9 @@ const Form = () => {
     instagram: '',
     sexo: '',
     dataNascimento: '',
-    tipoAtividade: '', // Novo campo: 'palestras' ou 'workshops'
-    mesaSelecionada: '', // Novo campo para mesas
-    oficinaSelecionada: '', // Novo campo para oficinas
+    tipoAtividade: '',
+    mesaSelecionada: '',
+    oficinaSelecionada: '',
     aceitouTermos: false
   });
 
@@ -56,16 +56,8 @@ const Form = () => {
   };
 
   return (
-    <div 
-      className="form-container"
-      style={{ 
-        backgroundImage: "url('/images/banner2.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      <form className="glass-form" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="elegant-form" onSubmit={handleSubmit}>
         <img 
           src="/images/novidade23.png" 
           alt="Marca d'água" 
@@ -73,7 +65,6 @@ const Form = () => {
         />
         <h2>Olá, Palestrante/Convidado</h2>
         
-        {/* Campos existentes permanecem iguais */}
         <div className="form-group">
           <label htmlFor="nome">Nome completo</label>
           <input 
@@ -132,7 +123,7 @@ const Form = () => {
         
         <div className="form-group">
           <label>Sexo</label>
-          <div className="radio-group">
+          <div className="radio-group1">
             <label>
               <input
                 type="radio"
@@ -182,7 +173,6 @@ const Form = () => {
           />
         </div>
 
-        {/* Novo campo: Tipo de Atividade */}
         <div className="form-group">
           <label>Tipo de Atividade</label>
           <div className="radio-group">
@@ -211,7 +201,6 @@ const Form = () => {
           </div>
         </div>
 
-        {/* Campo condicional para Mesas */}
         {formData.tipoAtividade === 'palestras' && (
           <div className="form-group">
             <label>Selecione a Mesa</label>
@@ -253,7 +242,6 @@ const Form = () => {
           </div>
         )}
 
-        {/* Campo condicional para Oficinas */}
         {formData.tipoAtividade === 'workshops' && (
           <div className="form-group">
             <label>Selecione a Oficina</label>

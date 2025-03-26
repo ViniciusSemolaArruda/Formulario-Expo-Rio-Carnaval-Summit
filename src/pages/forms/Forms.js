@@ -2,7 +2,7 @@ import React from 'react';
 import Form from '../../components/form/Form';
 
 
-const Home = () => {
+const Forms = () => {
     console.log("Home está sendo renderizada!"); // Verifique se essa mensagem aparece no console
     return (
       <div>
@@ -11,4 +11,4 @@ const Home = () => {
     );
   };
   
-  export default Home;
+  export default Forms;

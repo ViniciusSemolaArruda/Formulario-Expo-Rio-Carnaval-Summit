@@ -1,178 +1,117 @@
 /* Container principal */
 .inicio-container {
-    position: relative; /* Novo */
+    position: relative;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    overflow: hidden; /* Novo - evita vazamento da marca d'água */
+    background-color: #ffffff; /* Fundo branco */
+    overflow: hidden;
 }
 
-.marca-dagua2 {
-    position: fixed; /* Alterado de absolute para fixed */
-    bottom: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
-    opacity: 0.15; /* Reduzido ainda mais */
-    z-index: 0;
-    pointer-events: none;
-    max-width: 300px;
-    width: 350px;
-    height: auto;
-    object-fit: contain;
-    filter: brightness(1.2); /* Novo - aumenta brilho para melhor contraste */
-}
-  
-  /* Opcional: efeito ao passar o mouse */
-  .glass-card {
-    position: relative;
-    z-index: 2; /* Aumentado para garantir sobreposição */
-    /* ... mantém o resto ... */
-}
 
-/* Card com efeito de vidro */
-.glass-card {
+/* Card elegante */
+.card-elegante {
     position: relative;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: #ffffff;
     border-radius: 20px;
     padding: 40px;
     width: 500px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 10px 35px rgba(0, 0, 0, 0.2),
-        inset 0 5px 15px rgba(255, 255, 255, 0.1);
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     z-index: 1;
     box-sizing: border-box;
     text-align: center;
 }
 
-/* Efeito de reflexo animado */
-.glass-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.08) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(30deg);
-    animation: glassShine 8s infinite linear;
-    z-index: -1;
-}
-
-@keyframes glassShine {
-    0% { transform: translateX(-100%) rotate(30deg); }
-    100% { transform: translateX(100%) rotate(30deg); }
-}
-
 /* Títulos */
-.glass-card h1 {
-    color: rgb(255, 255, 255); /* Branco mais sólido */
-    text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.7), /* Sombra mais forte */
-        -2px -2px 4px rgba(0, 0, 0, 0.5);
-
-        font-weight: 700; /* ou 'bold' */
+.card-elegante h1 {
+    color: #000000;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
 }
 
-.glass-card p, .radio-group label {
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 0.9),
-        -1px -1px 3px rgba(0, 0, 0, 0.8);
-    
+.card-elegante p, .radio-group label {
+  background: transparent; /* Torna o fundo transparente */
+  color: #000000;
 }
 
-/* Radio buttons - Estilo melhorado */
-.radio-group1 {
+/* Radio buttons - Estilo moderno */
+.radio-group {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 
-.radio-label1 {
+.radio-label {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-weight: normal;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 0.9),
-        -1px -1px 3px rgba(0, 0, 0, 0.8);
-    
+    color: #000000;
+    font-weight: 500;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
 }
 
-
-.radio-label1:hover {
-    transform: translateY(-2px);
+.radio-label:hover {
+    background: #f0f0f0;
 }
 
-.radio-label1 input[type="radio"] {
+.radio-label input[type="radio"] {
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
+    width: 18px;
+    height: 18px;
+    border: 2px solid #888;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
 }
 
-.radio-label1 input[type="radio"]:checked {
-    border-color: rgb(255, 255, 255);
-    background: rgba(255, 255, 255, 0.2);
+.radio-label input[type="radio"]:checked {
+    border-color: #000;
+    background: #f8f8f8;
 }
 
-.radio-label1 input[type="radio"]:checked::after {
+.radio-label input[type="radio"]:checked::after {
     content: '';
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 2px;
+    left: 2px;
     width: 10px;
     height: 10px;
-    background: white;
+    background: #000;
     border-radius: 50%;
 }
 
-/* Botão de submit melhorado */
+/* Botão de submit */
 .submit-button {
     width: 100%;
     padding: 16px;
     border-radius: 10px;
     font-size: 16px;
     border: none;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
+    background: #000000;
+    color: #ffffff;
     font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    font-weight: 600; /* semi-bold */
 }
 
 .submit-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .submit-button:active {
@@ -183,28 +122,21 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
-    background: rgba(255, 255, 255, 0.1);
+    background: #888;
 }
 
 /* Responsividade */
 @media (max-width: 600px) {
-    .glass-card {
+    .card-elegante {
         padding: 30px 20px;
-        border-radius: 15px;
-        backdrop-filter: blur(12px);
         width: 90%;
     }
     
-    .glass-card h1 {
-        font-size: 24px;
-        margin-bottom: 25px;
+    .card-elegante h1 {
+        font-size: 1.5rem;
     }
     
     .radio-group {
-        gap: 12px;
-    }
-    
-    .submit-button {
-        padding: 14px;
+        margin: 20px 0;
     }
 }

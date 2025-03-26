@@ -1,348 +1,280 @@
 /* Container principal */
 .form-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-  }
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+}
 
-  /* Estilo para a marca d'água */
-.glass-form {
-    position: relative; /* Necessário para posicionar a marca d'água */
-    overflow: hidden; /* Esconde partes da imagem que ultrapassarem */
-  }
-  
-  .marca-dagua {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
-    opacity: 0.15; /* Deixa a imagem semi-transparente */
-    z-index: 0; /* Fica atrás do conteúdo */
-    pointer-events: none; /* Permite interação com elementos abaixo */
-    max-width: 350px; /* Ajuste conforme necessário */
-    transition: opacity 0.3s ease;
-    width: 350px;
-    height: auto;
-    object-fit: contain;
-  }
-  
-    
-  /* Efeito vidro principal com largura fixa de 500px */
-  .glass-form {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 20px;
-    padding: 40px;
-    width: 500px; /* Largura fixa de 500px */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-      0 10px 35px rgba(0, 0, 0, 0.2),
-      inset 0 5px 15px rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    box-sizing: border-box; /* Inclui padding na largura total */
-  }
-  
-  /* Efeito de reflexo animado */
-  .glass-form::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(30deg);
-    animation: glassShine 8s infinite linear;
-    z-index: -1;
-  }
-  
-  @keyframes glassShine {
-    0% { transform: translateX(-100%) rotate(30deg); }
-    100% { transform: translateX(100%) rotate(30deg); }
-  }
-  
-  /* Título do formulário */
-  .glass-form h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 28px;
-    color: rgb(255, 255, 255);
-    text-shadow: 
-    1px 1px 2px #000,
-    -1px -1px 2px #000,
-    1px -1px 2px #000,
-    -1px 1px 2px #000,
-    0 0 4px rgba(0,0,0,0.7); /* Contorno preto em todas as direções */
-  }
-  
-  /* Grupos de formulário */
-  .form-group {
-    margin-bottom: 25px;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 1),
-        -1px -1px 3px rgba(0, 0, 0, 1);
-  }
-  
-  /* Campos com largura total (500px - padding) */
-  .form-group input:not([type="radio"]),
-  .form-group input[type="date"],
-  .submit-btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 10px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-  }
-  
-  /* Campos de input */
-  .form-group input:not([type="radio"]) {
-    border: none;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: rgb(255, 255, 255);
-    backdrop-filter: blur(5px);
-  }
-  
-  .form-group input:focus {
-    outline: none;
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-  }
-  
-  .form-group input::placeholder {
-    color: rgb(255, 255, 255);
-  }
-  
-  /* Input de data */
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    opacity: 0.8;
-    cursor: pointer;
-  }
-  
-  input[type="date"]::-webkit-datetime-edit-fields-wrapper {
-    color: white;
-  }
-  
-  /* Radio buttons */
-  .radio-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 10px;
-    width: 100%;
-  }
-  
-  .radio-group label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: normal;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: bold;
-    text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 1),
-        -1px -1px 3px rgba(0, 0, 0, 1);
-  }
-  
-  .radio-group label:hover {
-    transform: translateY(-2px);
-  }
-  
-  .radio-group input[type="radio"] {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .radio-group input[type="radio"]:checked {
-    border-color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
-  .radio-group input[type="radio"]:checked::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 10px;
-    height: 10px;
-    background: white;
-    border-radius: 50%;
-  }
-  
-  /* Botão de submit */
-  .submit-btn {
-    border: none;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  }
-  
-  .submit-btn:hover {
-    background: rgba(255, 255, 255, 0.623);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .submit-btn:active {
-    transform: translateY(0);
-  }
-  
-/* Estilos para os termos - Versão com espaçamento aumentado */
+/* Estilo para a marca d'água */
+.elegant-form {
+  position: relative;
+  overflow: hidden;
+}
+
+.marca-dagua {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+  width: 350px;
+  height: auto;
+  max-width: 80%; /* Garante que não ultrapasse em telas pequenas */
+  object-fit: contain;
+  /* Removido qualquer filter para manter cores originais */
+}
+
+/* Formulário elegante */
+.elegant-form {
+  position: relative;
+  background-color: white;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  width: 500px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-sizing: border-box;
+  overflow: hidden; /* Importante para conter a marca d'água */
+}
+
+/* Título do formulário */
+.elegant-form h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #000000;
+}
+
+/* Grupos de formulário */
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333333;
+}
+
+/* Campos com largura total */
+.form-group input:not([type="radio"]),
+.form-group input[type="date"],
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Campos de input */
+.form-group input:not([type="radio"]) {
+  border: 1px solid #d0d0d0; /* Mantém apenas o contorno */
+  background: transparent; /* Torna o fundo transparente */
+  color: #000000;
+}
+
+.form-group input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #a0a0a0;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input::placeholder {
+  color: #888888;
+}
+
+/* Input de data */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* Radio buttons */
+.radio-group1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #333333;
+}
+
+.radio-group label:hover {
+  transform: translateY(-2px);
+}
+
+.radio-group input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #888888;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-group input[type="radio"]:checked {
+  border-color: #000000;
+  background: #ffffff;
+}
+
+.radio-group input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  background: #000000;
+  border-radius: 50%;
+}
+
+/* Botão de submit */
+.submit-btn {
+  border: none;
+  background: #000000;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background: #333333;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Estilos para os termos */
 .termos-group {
-    margin: 25px 0;
-    padding: 0 10px; /* Adiciona um pouco de respiro nas laterais */
-  }
-  
-  .termos-label {
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    color: white;
-    cursor: pointer;
-    line-height: 1.5;
-    gap: 15px; /* Espaço aumentado entre checkbox e texto */
-    width: fit-content; /* Ajusta ao conteúdo */
-    margin: 0 auto; /* Centraliza horizontalmente */
-    text-shadow: 
-    1px 1px 1px #000,
-    -1px -1px 1px #000; /* Contorno apenas nas laterais */
-  }
-  
-  .termos-label input[type="checkbox"] {
-    width: 20px; /* Tamanho ligeiramente aumentado */
-    height: 20px;
-    cursor: pointer;
-    flex-shrink: 0; /* Mantém o tamanho fixo */
-    position: relative;
-    top: 5px; /* Ajuste fino de alinhamento */
-  }
-  
-  .termos-texto {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Espaço entre texto e link */
-  }
-  
-  .termos-label a {
-    color: #ffffff;
-    text-decoration: underline;
-    transition: color 0.3s;
-    white-space: nowrap; /* Evita quebra de linha */
-  }
-  
-  .termos-label a:hover {
-    color: #3498db;
-    text-decoration: underline;
-  }
+  margin: 25px 0;
+  padding: 0 10px;
+}
+
+.termos-label {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #333333;
+  cursor: pointer;
+  line-height: 1.5;
+  gap: 15px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.termos-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  top: 5px;
+}
+
+.termos-label a {
+  color: #000000;
+  text-decoration: underline;
+  transition: color 0.3s;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.termos-label a:hover {
+  color: #555555;
+}
 
 /* Estilo para o campo Instagram */
 .instagram-input {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-  
-  .instagram-at {
-    position: absolute;
-    left: 15px;
-    color: white;
-    z-index: 1;
-    transition: color 0.3s ease;
-  }
-  
-  .instagram-at.active {
-    color: black; /* Muda para preto quando há texto */
-  }
-  
-  #instagram {
-    padding-left: 30px !important;
-    width: 100%;
-  }
-  
-  #instagram:focus::placeholder {
-    color: transparent;
-  }
- 
-  
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
+.instagram-at {
+  position: absolute;
+  left: 15px;
+  color: #888888;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
 
-  /* Responsividade */
-  @media (max-width: 600px) {
-    .glass-form {
+.instagram-at.active {
+  color: #000000;
+}
+
+#instagram {
+  padding-left: 30px !important;
+  width: 100%;
+}
+
+#instagram:focus::placeholder {
+  color: transparent;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .elegant-form {
       padding: 30px 20px;
       border-radius: 15px;
-      backdrop-filter: blur(12px);
       width: 90%;
-    }
-    
-    .glass-form h2 {
+  }
+  
+  .elegant-form h2 {
       font-size: 24px;
       margin-bottom: 25px;
-    }
-    
-    .radio-group {
+  }
+  
+  .radio-group {
       gap: 10px;
       flex-direction: column;
-    }
-    
-    .form-group input:not([type="radio"]),
-    .form-group input[type="date"],
-    .submit-btn {
-      padding: 14px;
-      text-shadow:0 0 4px rgba(0,0,0,0.5);
-    }
-
-    .marca-dagua {
-        position: absolute;
-        bottom: 50%;
-        left: 50%;
-        transform: translate(-50%, 50%);
-        opacity: 0.3; /* Deixa a imagem semi-transparente */
-        z-index: 0; /* Fica atrás do conteúdo */
-        pointer-events: none; /* Permite interação com elementos abaixo */
-        max-width: 300px; /* Ajuste conforme necessário */
-        transition: opacity 0.3s ease;
-        width: 350px;
-        height: auto;
-        object-fit: contain;
-      }
-
   }
+
+  .radio-group1 {
+    gap: 10px;
+    flex-direction: column;
+}
+
+  
+  .form-group input:not([type="radio"]),
+  .form-group input[type="date"],
+  .submit-btn {
+      padding: 14px;
+  }
+
+  .marca-dagua {
+      max-width: 300px;
+      opacity: 0.1;
+  }
+}

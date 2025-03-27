@@ -204,7 +204,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .termos-label a {
-  color: #000000;
+  color: -webkit-link;
   text-decoration: underline;
   transition: color 0.3s;
   white-space: nowrap;

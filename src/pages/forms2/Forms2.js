@@ -1,13 +1,14 @@
 import React from 'react';
 
-import Maintenance from '../../components/maintenance/Maintenance';
+
+import Form2 from '../../components/form2/Form2';
 
 
 const Forms2 = () => {
     console.log("Home está sendo renderizada!"); // Verifique se essa mensagem aparece no console
     return (
       <div>
-        <Maintenance/>
+        <Form2/>
       </div>
     );
   };

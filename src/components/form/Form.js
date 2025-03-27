@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import './Form.css';
+import { db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +19,29 @@ const Form = () => {
     oficinaSelecionada: '',
     aceitouTermos: false
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Função para mostrar notificações de forma segura
+  const showNotification = (type, message) => {
+    const options = {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      toastId: type === 'error' ? 'error-toast' : 'success-toast' // IDs fixos
+    };
+
+    if (type === 'error') {
+      toast.error(message, options);
+    } else {
+      toast.success(message, options);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -46,17 +74,72 @@ const Form = () => {
     return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (!formData.aceitouTermos) {
-      alert('Você deve aceitar os termos para continuar');
+      showNotification('error', 'Você deve aceitar os termos para continuar');
       return;
     }
-    console.log('Dados do formulário:', formData);
+  
+    setIsSubmitting(true);
+    
+    try {
+      const dadosParaEnviar = {
+        nome: formData.nome || '',
+        email: formData.email || '',
+        celular: formData.celular ? formData.celular.replace(/[^\d]/g, '') : '',
+        instagram: formData.instagram || '',
+        sexo: formData.sexo || '',
+        dataNascimento: formData.dataNascimento || '',
+        tipoAtividade: formData.tipoAtividade || '',
+        mesaSelecionada: formData.mesaSelecionada || '',
+        oficinaSelecionada: formData.oficinaSelecionada || '',
+        aceitouTermos: !!formData.aceitouTermos,
+        dataCadastro: serverTimestamp()
+      };
+      
+      await addDoc(collection(db, "inscricoes"), dadosParaEnviar);
+      
+      showNotification('success', 'Formulário enviado com sucesso!');
+      
+      // Reset do formulário
+      setFormData({
+        nome: '',
+        email: '',
+        celular: '',
+        instagram: '',
+        sexo: '',
+        dataNascimento: '',
+        tipoAtividade: '',
+        mesaSelecionada: '',
+        oficinaSelecionada: '',
+        aceitouTermos: false
+      });
+      
+    } catch (error) {
+      console.error("Erro detalhado:", error);
+      showNotification('error', `Erro ao enviar: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="form-container">
+      <ToastContainer 
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      
       <form className="elegant-form" onSubmit={handleSubmit}>
         <img 
           src="/images/novidade23.png" 
@@ -285,7 +368,13 @@ const Form = () => {
           </label>
         </div>
         
-        <button type="submit" className="submit-btn">Enviar</button>
+        <button 
+          type="submit" 
+          className="submit-btn"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Enviando...' : 'Enviar'}
+        </button>
       </form>
     </div>
   );

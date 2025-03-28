@@ -5,7 +5,6 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const Form = () => {
   const [formData, setFormData] = useState({
     nome: '',
@@ -14,9 +13,13 @@ const Form = () => {
     instagram: '',
     sexo: '',
     dataNascimento: '',
+    diaEvento: '',
     tipoAtividade: '',
-    mesaSelecionada: '',
-    oficinaSelecionada: '',
+    tipoWorkshop: '',
+    tipoPalestra: '',
+    horariosWorkshop: [],
+    horariosPalestra: [],
+    horariosDebate: [],
     aceitouTermos: false
   });
 
@@ -33,7 +36,7 @@ const Form = () => {
       draggable: true,
       progress: undefined,
       theme: "colored",
-      toastId: type === 'error' ? 'error-toast' : 'success-toast' // IDs fixos
+      toastId: type === 'error' ? 'error-toast' : 'success-toast'
     };
 
     if (type === 'error') {
@@ -59,6 +62,25 @@ const Form = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    
+    setFormData(prev => {
+      const currentArray = [...prev[name]];
+      if (checked) {
+        return {
+          ...prev,
+          [name]: [...currentArray, value]
+        };
+      } else {
+        return {
+          ...prev,
+          [name]: currentArray.filter(item => item !== value)
+        };
+      }
+    });
   };
 
   const formatPhoneNumber = (value) => {
@@ -92,9 +114,13 @@ const Form = () => {
         instagram: formData.instagram || '',
         sexo: formData.sexo || '',
         dataNascimento: formData.dataNascimento || '',
+        diaEvento: formData.diaEvento || '',
         tipoAtividade: formData.tipoAtividade || '',
-        mesaSelecionada: formData.mesaSelecionada || '',
-        oficinaSelecionada: formData.oficinaSelecionada || '',
+        tipoWorkshop: formData.tipoWorkshop || '',
+        tipoPalestra: formData.tipoPalestra || '',
+        horariosWorkshop: formData.horariosWorkshop || [],
+        horariosPalestra: formData.horariosPalestra || [],
+        horariosDebate: formData.horariosDebate || [],
         aceitouTermos: !!formData.aceitouTermos,
         dataCadastro: serverTimestamp()
       };
@@ -111,9 +137,13 @@ const Form = () => {
         instagram: '',
         sexo: '',
         dataNascimento: '',
+        diaEvento: '',
         tipoAtividade: '',
-        mesaSelecionada: '',
-        oficinaSelecionada: '',
+        tipoWorkshop: '',
+        tipoPalestra: '',
+        horariosWorkshop: [],
+        horariosPalestra: [],
+        horariosDebate: [],
         aceitouTermos: false
       });
       
@@ -256,101 +286,168 @@ const Form = () => {
           />
         </div>
 
+        {/* Seleção do dia do evento */}
         <div className="form-group">
-          <label>Tipo de Atividade</label>
+          <label>Dia do Evento</label>
           <div className="radio-group">
             <label>
               <input
                 type="radio"
-                name="tipoAtividade"
-                value="palestras"
-                checked={formData.tipoAtividade === 'palestras'}
+                name="diaEvento"
+                value="6"
+                checked={formData.diaEvento === '6'}
                 onChange={handleChange}
                 required
               />
-              Palestras / Mesas Redondas
+              Dia 6
             </label>
             
             <label>
               <input
                 type="radio"
-                name="tipoAtividade"
-                value="workshops"
-                checked={formData.tipoAtividade === 'workshops'}
+                name="diaEvento"
+                value="7"
+                checked={formData.diaEvento === '7'}
                 onChange={handleChange}
               />
-              Workshops / Oficinas
+              Dia 7
             </label>
           </div>
         </div>
 
-        {formData.tipoAtividade === 'palestras' && (
+        {/* Seleção do tipo de atividade */}
+        {formData.diaEvento && (
           <div className="form-group">
-            <label>Selecione a Mesa</label>
+            <label>Tipo de Atividade</label>
             <div className="radio-group">
               <label>
                 <input
                   type="radio"
-                  name="mesaSelecionada"
-                  value="mesa1"
-                  checked={formData.mesaSelecionada === 'mesa1'}
+                  name="tipoAtividade"
+                  value="workshops"
+                  checked={formData.tipoAtividade === 'workshops'}
                   onChange={handleChange}
                   required
                 />
-                Mesa 1
+                Workshops / Oficinas Laboratórios
               </label>
               
               <label>
                 <input
                   type="radio"
-                  name="mesaSelecionada"
-                  value="mesa2"
-                  checked={formData.mesaSelecionada === 'mesa2'}
+                  name="tipoAtividade"
+                  value="palestras"
+                  checked={formData.tipoAtividade === 'palestras'}
                   onChange={handleChange}
                 />
-                Mesa 2
+                Palestras no Teatro
               </label>
               
               <label>
                 <input
                   type="radio"
-                  name="mesaSelecionada"
-                  value="mesa3"
-                  checked={formData.mesaSelecionada === 'mesa3'}
+                  name="tipoAtividade"
+                  value="debates"
+                  checked={formData.tipoAtividade === 'debates'}
                   onChange={handleChange}
                 />
-                Mesa 3
+                Debates / Mesas Redondas no Auditório
               </label>
             </div>
           </div>
         )}
 
+        {/* Seleção do tipo de workshop */}
         {formData.tipoAtividade === 'workshops' && (
+          <>
+            <div className="form-group">
+              <label>Tipo de Workshop</label>
+              <div className="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    name="tipoWorkshop"
+                    value="oficina1"
+                    checked={formData.tipoWorkshop === 'oficina1'}
+                    onChange={handleChange}
+                    required
+                  />
+                  Oficina Espaço 1
+                </label>
+                
+                <label>
+                  <input
+                    type="radio"
+                    name="tipoWorkshop"
+                    value="oficina2"
+                    checked={formData.tipoWorkshop === 'oficina2'}
+                    onChange={handleChange}
+                  />
+                  Oficina Espaço 2
+                </label>
+              </div>
+            </div>
+
+            {formData.tipoWorkshop && (
+              <div className="form-group">
+                <label>Horários Disponíveis (Workshops)</label>
+                <div className="checkbox-group">
+                  {['11:00', '13:00', '15:00', '17:00'].map((horario) => (
+                    <label key={horario}>
+                      <input
+                        type="checkbox"
+                        name="horariosWorkshop"
+                        value={horario}
+                        checked={formData.horariosWorkshop.includes(horario)}
+                        onChange={handleCheckboxChange}
+                      />
+                      {horario}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Seleção de horários para palestras */}
+        {formData.tipoAtividade === 'palestras' && (
           <div className="form-group">
-            <label>Selecione a Oficina</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  name="oficinaSelecionada"
-                  value="oficina1"
-                  checked={formData.oficinaSelecionada === 'oficina1'}
-                  onChange={handleChange}
-                  required
-                />
-                Oficina Espaço 1
-              </label>
-              
-              <label>
-                <input
-                  type="radio"
-                  name="oficinaSelecionada"
-                  value="oficina2"
-                  checked={formData.oficinaSelecionada === 'oficina2'}
-                  onChange={handleChange}
-                />
-                Oficina Espaço 2
-              </label>
+            <label>Horários Disponíveis (Palestras Teatro)</label>
+            <div className="checkbox-group">
+              {['10:00', '12:00', '14:00', '16:00'].map((horario) => (
+                <label key={horario}>
+                  <input
+                    type="checkbox"
+                    name="horariosPalestra"
+                    value={horario}
+                    checked={formData.horariosPalestra.includes(horario)}
+                    onChange={handleCheckboxChange}
+                  />
+                  {horario}
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Seleção de horários para debates */}
+        {formData.tipoAtividade === 'debates' && (
+          <div className="form-group">
+            <label>Horários Disponíveis (Debates Auditório)</label>
+            <div className="checkbox-group">
+              {['10:00', '12:00', '14:00', '16:00'].map((horario) => (
+                <label key={horario}>
+                  <input
+                    type="checkbox"
+                    name="horariosDebate"
+                    value={horario}
+                    checked={formData.horariosDebate.includes(horario)}
+                    onChange={handleCheckboxChange}
+                  />
+                  {horario}
+                </label>
+              ))}
             </div>
           </div>
         )}

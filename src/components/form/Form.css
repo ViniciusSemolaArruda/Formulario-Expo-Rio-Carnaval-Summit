@@ -278,3 +278,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       opacity: 0.1;
   }
 }
+
+/* Estilos para os grupos de checkbox */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  margin: 5px 15px 5px 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 5px;
+}

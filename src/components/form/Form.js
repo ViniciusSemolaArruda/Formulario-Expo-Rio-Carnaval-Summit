@@ -16,7 +16,7 @@ const Form = () => {
     diaEvento: '',
     tipoAtividade: '',
     tipoWorkshop: '',
-    tipoPalestra: '',
+    mesaSelecionada: '',
     horariosWorkshop: [],
     horariosPalestra: [],
     horariosDebate: [],
@@ -25,7 +25,13 @@ const Form = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Função para mostrar notificações de forma segura
+  // Horários específicos para cada mesa
+  const horariosPorMesa = {
+    'Mesa 1': ['10:00', '13:30', '16:00'], // ✅ Apenas horários iniciais
+    'Mesa 2': ['10:25', '13:55', '16:25'],
+    'Mesa 3': ['10:45', '14:15', '16:45']
+  };
+
   const showNotification = (type, message) => {
     const options = {
       position: "top-center",
@@ -107,23 +113,48 @@ const Form = () => {
     setIsSubmitting(true);
     
     try {
-      const dadosParaEnviar = {
-        nome: formData.nome || '',
-        email: formData.email || '',
-        celular: formData.celular ? formData.celular.replace(/[^\d]/g, '') : '',
-        instagram: formData.instagram || '',
-        sexo: formData.sexo || '',
-        dataNascimento: formData.dataNascimento || '',
-        diaEvento: formData.diaEvento || '',
-        tipoAtividade: formData.tipoAtividade || '',
-        tipoWorkshop: formData.tipoWorkshop || '',
-        tipoPalestra: formData.tipoPalestra || '',
-        horariosWorkshop: formData.horariosWorkshop || [],
-        horariosPalestra: formData.horariosPalestra || [],
-        horariosDebate: formData.horariosDebate || [],
-        aceitouTermos: !!formData.aceitouTermos,
+      // Objeto base com campos obrigatórios
+      const dadosBase = {
+        nome: formData.nome.trim(),
+        email: formData.email.trim(),
+        celular: formData.celular.replace(/[^\d]/g, ''),
+        instagram: formData.instagram.trim(),
+        sexo: formData.sexo,
+        dataNascimento: formData.dataNascimento,
+        diaEvento: formData.diaEvento,
+        tipoAtividade: formData.tipoAtividade,
+        aceitouTermos: true,
         dataCadastro: serverTimestamp()
       };
+  
+      // Adiciona campos específicos conforme o tipo de atividade
+      const dadosCondicionais = {};
+      
+      if (formData.tipoAtividade === 'workshops') {
+        dadosCondicionais.tipoWorkshop = formData.tipoWorkshop;
+        if (formData.horariosWorkshop.length > 0) {
+          dadosCondicionais.horariosWorkshop = formData.horariosWorkshop;
+        }
+      }
+      
+      if (formData.tipoAtividade === 'palestras' || formData.tipoAtividade === 'debates') {
+        dadosCondicionais.mesaSelecionada = formData.mesaSelecionada;
+        
+        const horarios = formData.tipoAtividade === 'palestras' 
+          ? formData.horariosPalestra 
+          : formData.horariosDebate;
+        
+        if (horarios.length > 0) {
+          dadosCondicionais[
+            formData.tipoAtividade === 'palestras' 
+              ? 'horariosPalestra' 
+              : 'horariosDebate'
+          ] = horarios;
+        }
+      }
+  
+      // Combina os dados base com os condicionais
+      const dadosParaEnviar = { ...dadosBase, ...dadosCondicionais };
       
       await addDoc(collection(db, "inscricoes"), dadosParaEnviar);
       
@@ -140,7 +171,7 @@ const Form = () => {
         diaEvento: '',
         tipoAtividade: '',
         tipoWorkshop: '',
-        tipoPalestra: '',
+        mesaSelecionada: '',
         horariosWorkshop: [],
         horariosPalestra: [],
         horariosDebate: [],
@@ -286,7 +317,6 @@ const Form = () => {
           />
         </div>
 
-        {/* Seleção do dia do evento */}
         <div className="form-group">
           <label>Dia do Evento</label>
           <div className="radio-group">
@@ -315,7 +345,6 @@ const Form = () => {
           </div>
         </div>
 
-        {/* Seleção do tipo de atividade */}
         {formData.diaEvento && (
           <div className="form-group">
             <label>Tipo de Atividade</label>
@@ -357,7 +386,6 @@ const Form = () => {
           </div>
         )}
 
-        {/* Seleção do tipo de workshop */}
         {formData.tipoAtividade === 'workshops' && (
           <>
             <div className="form-group">
@@ -410,39 +438,66 @@ const Form = () => {
           </>
         )}
 
-        {/* Seleção de horários para palestras */}
-        {formData.tipoAtividade === 'palestras' && (
+        {(formData.tipoAtividade === 'palestras' || formData.tipoAtividade === 'debates') && (
           <div className="form-group">
-            <label>Horários Disponíveis (Palestras Teatro)</label>
-            <div className="checkbox-group">
-              {['10:00', '12:00', '14:00', '16:00'].map((horario) => (
-                <label key={horario}>
-                  <input
-                    type="checkbox"
-                    name="horariosPalestra"
-                    value={horario}
-                    checked={formData.horariosPalestra.includes(horario)}
-                    onChange={handleCheckboxChange}
-                  />
-                  {horario}
-                </label>
-              ))}
+            <label>Selecione a Mesa</label>
+            <div className="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  name="mesaSelecionada"
+                  value="Mesa 1"
+                  checked={formData.mesaSelecionada === 'Mesa 1'}
+                  onChange={handleChange}
+                  required
+                />
+                Mesa 1
+              </label>
+              
+              <label>
+                <input
+                  type="radio"
+                  name="mesaSelecionada"
+                  value="Mesa 2"
+                  checked={formData.mesaSelecionada === 'Mesa 2'}
+                  onChange={handleChange}
+                />
+                Mesa 2
+              </label>
+              
+              <label>
+                <input
+                  type="radio"
+                  name="mesaSelecionada"
+                  value="Mesa 3"
+                  checked={formData.mesaSelecionada === 'Mesa 3'}
+                  onChange={handleChange}
+                />
+                Mesa 3
+              </label>
             </div>
           </div>
         )}
 
-        {/* Seleção de horários para debates */}
-        {formData.tipoAtividade === 'debates' && (
+        {formData.mesaSelecionada && (
           <div className="form-group">
-            <label>Horários Disponíveis (Debates Auditório)</label>
+            <label>Horários Disponíveis ({formData.mesaSelecionada})</label>
             <div className="checkbox-group">
-              {['10:00', '12:00', '14:00', '16:00'].map((horario) => (
+              {horariosPorMesa[formData.mesaSelecionada].map((horario) => (
                 <label key={horario}>
                   <input
                     type="checkbox"
-                    name="horariosDebate"
+                    name={
+                      formData.tipoAtividade === 'palestras' 
+                        ? 'horariosPalestra' 
+                        : 'horariosDebate'
+                    }
                     value={horario}
-                    checked={formData.horariosDebate.includes(horario)}
+                    checked={
+                      formData.tipoAtividade === 'palestras'
+                        ? formData.horariosPalestra.includes(horario)
+                        : formData.horariosDebate.includes(horario)
+                    }
                     onChange={handleCheckboxChange}
                   />
                   {horario}
